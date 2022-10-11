@@ -1,7 +1,12 @@
 import axios from "axios";
 import { createContext, useEffect, useState } from "react";
 import { url } from "../constant";
-// import cookie from 'react-cookies'
+import Cookies from 'universal-cookie';
+import API from "../API/axiosInstance";
+const cookies = new Cookies();
+
+
+
 
 export const AuthContext = createContext();
 
@@ -9,11 +14,12 @@ export const AuthContexProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(
     JSON.parse(localStorage.getItem("user")) || null
   );
+  const [token, setToken] = useState(null);
 
   const login = async (inputs) => {
-    const res = await axios.post(`${url}/auth/login`, inputs, { withCredentials: true });
+    const res = await API.post(`/auth/login`, inputs);
     setCurrentUser(res.data.other);
-    // cookie.save('access_token', res.data.token, { path: '/', httpOnly: true })
+    setToken(res.data.token);
   };
 
   const logout = async (inputs) => {
@@ -23,6 +29,7 @@ export const AuthContexProvider = ({ children }) => {
 
   useEffect(() => {
     localStorage.setItem("user", JSON.stringify(currentUser));
+    cookies.set('access-token', token);
   }, [currentUser]);
 
   return (

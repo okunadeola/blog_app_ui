@@ -10,13 +10,13 @@
     "dompurify": "^2.4.0",
     "moment": "^2.29.4",
     "react": "^18.0.0",
-    "react-cookies": "^0.1.1",
     "react-dom": "^18.0.0",
     "react-quill": "^2.0.0",
     "react-router-dom": "^6.4.1",
     "react-scripts": "5.0.1",
     "react-toastify": "^9.0.8",
     "sass": "^1.55.0",
+    "universal-cookie": "^4.0.4",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
