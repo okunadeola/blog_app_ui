@@ -12,6 +12,7 @@ import { url } from "../constant";
 import { ToastContainer } from "react-toastify";
 import { inform, informSuccess } from "../methods";
 import defaultImg from '../assets/default.png'
+import API from "../API/axiosInstance";
 
 const Single = () => {
   const [post, setPost] = useState({});
@@ -28,7 +29,7 @@ const Single = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get(`${url}/posts/${postId}`);
+        const res = await API.get(`/posts/${postId}`);
         setPost(res.data);
       } catch (err) {
         console.log(err);
@@ -42,7 +43,7 @@ const Single = () => {
   useEffect(() => {
     const fetchComment = async () => {
       try {
-        const res = await axios.get(`${url}/posts/comment/${postId}`);
+        const res = await API.get(`/posts/comment/${postId}`);
         setComments(res.data);
       } catch (err) {
         console.log(err);
@@ -55,7 +56,7 @@ const Single = () => {
 
   const handleDelete = async ()=>{
     try {
-      await axios.delete(`${url}/posts/${postId}`,  { withCredentials: true });
+      await API.delete(`/posts/${postId}`);
       informSuccess('post deleted successfully!');
       navigate("/")
     } catch (err) {
@@ -72,7 +73,7 @@ const Single = () => {
           date: moment(Date.now()).format("YYYY-MM-DD HH:mm:ss"),
         }
 
-        await axios.post(`${url}/posts/${postId}`, json,   { withCredentials: true });
+        await API.post(`/posts/${postId}`, json );
         informSuccess('comment added successfully!');
         setComments(prev=> [...prev, {
           ...json,

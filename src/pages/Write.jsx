@@ -8,6 +8,7 @@ import { url } from "../constant";
 import { useRef } from "react";
 import { uploadImage } from "../upload";
 import { ToastContainer } from "react-toastify";
+import API from "../API/axiosInstance";
 
 const Write = () => {
   const state = useLocation().state;
@@ -37,19 +38,20 @@ const Write = () => {
 
     try {
       state
-        ? await axios.put(`${url}/posts/${state.id}`, {
+        ? await API.put(`/posts/${state.id}`, {
             title,
             descr: value,
             cat,
             img: postImage.length ? postImage[0]  : "",
-          },  { withCredentials: true })
-        : await axios.post(`${url}/posts/`, {
+          })
+        : await API.post(`/posts/`, {
             title,
             descr: value,
             cat,
             img: postImage.length ? postImage[0]  : "",
             date: moment(Date.now()).format("YYYY-MM-DD HH:mm:ss"),
-          },  { withCredentials: true });
+          });
+          // { withCredentials: true }
           navigate("/")
     } catch (err) {
       console.log(err);

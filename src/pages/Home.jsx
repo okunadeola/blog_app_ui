@@ -4,6 +4,7 @@ import axios from "axios";
 import DOMPurify from "dompurify";
 import { url } from "../constant";
 import { ToastContainer } from "react-toastify";
+import API from "../API/axiosInstance";
 
 const Home = () => {
   const [posts, setPosts] = useState([]);
@@ -13,7 +14,7 @@ const Home = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get(`${url}/posts${cat}`);
+        const res = await API.get(`/posts${cat}`);
         setPosts(res.data);
       } catch (err) {
         console.log(err);
